@@ -174,7 +174,7 @@ class MealPlanner:
                 return
             print("\nYour Favorite Meals:")
             for meal in self.user.favorites:
-                print(f"{meal}"
+                print(f"{meal}")
 
         
         def display_menu(self): #Meal Planner Main Menu
