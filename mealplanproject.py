@@ -29,10 +29,25 @@ class User:
             self.restrictions = [restriction.strip().lower() for restriction in restrictions]  
             self.caloric_needs = caloric_needs
             self.meal_plan = []
-
+            self.favorites = [] 
+            self.excluded_meals = []
+        
         def __str__(self):
             return f"Preferences: {self.dietary_preferences}, Restrictions: {self.restrictions}, Caloric Needs: {self.caloric_needs}"
 
+        def save_favorite(self, meal):
+                if meal not in self.favorites:
+                        self.favorites.append(meal)
+                        print(f"{meal} added to Favorites!")
+                else:
+                        print(f"{meal} is already in Favorites.")
+                        
+        def exclude_meal(self, meal):
+                if meal not in self.excluded_meals:
+                        self.excluded_meals.append(meal)
+                        print(f"{meal} added to Excluded Meals.")
+                else:
+                        print(f"{meal} is already in Excluded Meals.")
 
 class MealPlanner:
         def __init__(self):
@@ -93,7 +108,8 @@ class MealPlanner:
                         # Ensure meal does not contain restricted ingredients
                         (not self.user.restrictions or
                          all(restriction not in meal.ingredients for restriction in self.user.restrictions)) and
-                        meal.name not in used_meals  # Ensure global uniqueness
+                        meal.name not in used_meals and 
+                        meal.name not in self.user.excluded_meals # Ensure global uniqueness and excluded meals
                     ]
                     print(f"Checking meals for {meal_type} on day {day + 1}...")
                     print(f"Total meals: {len(all_meals)}, Suitable meals: {len(suitable_meals)}")
@@ -129,14 +145,48 @@ class MealPlanner:
                     else:
                         print(" - No suitable meal found for this slot.")
                 print()
+                    
+        def add_favorite_meal(self):
+            if not self.user:
+                print("User preferences not set. Please set preferences first.")
+                return
+            meal_name = input("Enter the name of the meal to add to favorites: ").strip()
+            meal = next((m for m in self.meals if m.name.lower() == meal_name.lower()), None)
+            if meal:
+                self.user.save_favorite(meal)  
+            else: 
+                print("Meal not found. Please try again.")
 
+        def add_excluded_meal(self):
+            if not self.user:
+                print("User preferences not set. Please set preferences first.")
+                return
+            meal_name = input("Enter the name of the meal to exlude: ").strip()
+            meal = next((m for m in self.meals if m.name.lower() == meal_name.lower()), None)
+            if meal:
+                self.user.save_favorite(meal)  
+            else: 
+                print("Meal not found. Please try again.")
+
+        def view_favorites(self):
+            if not self.user or not self.user.meal_plan:
+                print("No favorite meals saved yet.")
+                return
+            print("\nYour Favorite Meals:")
+            for meal in self.user.favorites:
+                print(f"{meal}"
+
+        
         def display_menu(self): #Meal Planner Main Menu
             while True:
                 print("\nMeal Planner Menu:")
                 print("1. Set Preferences and Restrictions")
                 print("2. Generate Weekly Meal Plan")
                 print("3. View Meal Plan")
-                print("4. Quit")
+                print("4. Add Favorite Meal")
+                print("5. Exclude Meal")
+                print("6. View Favorites")
+                print("7. Quit")
 
                 choice = input("Choose an option: ")
                 if choice == "1":
@@ -146,6 +196,12 @@ class MealPlanner:
                 elif choice == "3":
                     self.display_meal_plan()
                 elif choice == "4":
+                    self.add_favorite_meal()
+                elif choice == "5":
+                    self.add_excluded_meal()
+                elif choice == "6":
+                    self.view_favorites()
+                elif choice == "7":
                     print("Thank you for using the Meal Planner. Goodbye!")
                     break
                 else:
