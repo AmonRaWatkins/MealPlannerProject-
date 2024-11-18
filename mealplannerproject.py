@@ -9,9 +9,9 @@ class Meal:
             self.ingredients = ingredients
             self.prep_time = prep_time
             self.servings = servings
-            self.nutrition = nutrition  # Calories, protein, carbs, fat
-            self.meal_type = meal_type  # Breakfast, Lunch, Dinner
-            self.dietary_preferences = [pref.strip().lower() for pref in dietary_preferences]  # Normalize to lowercase
+            self.nutrition = nutrition  # Prints out the amount of calories, protein, carbs, and fat in each meal
+            self.meal_type = meal_type  # Prints the 3 meals, breakfast, lunch, dinner
+            self.dietary_preferences = [pref.strip().lower() for pref in dietary_preferences]
 
 
         def __str__(self):
@@ -37,7 +37,7 @@ class User:
 class MealPlanner:
         def __init__(self):
             self.user = None
-            self.meals = self.load_meals_from_json([  # Two paths for json files
+            self.meals = self.load_meals_from_json([  # Two paths for the json files
                 "meal_planner_recipes.json",
                 "meal_planner_50_meals.json"
             ])
@@ -80,9 +80,9 @@ class MealPlanner:
             all_meals = random.sample(self.meals, len(self.meals))  # Shuffle meals to maximize variety
             used_meals = set()  # Track globally used meals across the week
 
-            for day in range(7):  # One week
+            for day in range(7):  # Displays the meal plan for 1 week, 7 days
                 daily_meals = []
-                daily_calories = 0  # Track total calories for the day
+                daily_calories = 0  # Tracks total calories for the day
                 for meal_type in ["breakfast", "lunch", "dinner"]:
                     suitable_meals = [
                         meal for meal in all_meals
@@ -130,7 +130,7 @@ class MealPlanner:
                         print(" - No suitable meal found for this slot.")
                 print()
 
-        def display_menu(self):
+        def display_menu(self): #Meal Planner Main Menu
             while True:
                 print("\nMeal Planner Menu:")
                 print("1. Set Preferences and Restrictions")
