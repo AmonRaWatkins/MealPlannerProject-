@@ -83,6 +83,7 @@ class MealPlanner:
 
         for day in range(7):  # One week
             daily_meals = []
+            daily_calories = 0
             for meal_type in ["breakfast", "lunch", "dinner"]:
                 suitable_meals = [
                     meal for meal in all_meals
