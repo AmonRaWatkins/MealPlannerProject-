@@ -44,10 +44,10 @@ class User:
                         
         def exclude_meal(self, meal):
                 if meal not in self.excluded_meals:
-                        self.excluded_meals.append(meal)
-                        print(f"{meal} added to Excluded Meals.")
+                        self.excluded_meals.append(meal_name)
+                        print(f"{meal_name} added to Excluded Meals.")
                 else:
-                        print(f"{meal} is already in Excluded Meals.")
+                        print(f"{meal_name} is already in Excluded Meals.")
 
 class MealPlanner:
         def __init__(self):
@@ -164,7 +164,7 @@ class MealPlanner:
             meal_name = input("Enter the name of the meal to exlude: ").strip()
             meal = next((m for m in self.meals if m.name.lower() == meal_name.lower()), None)
             if meal:
-                self.user.save_favorite(meal)  
+                self.user.exclude_meal(meal.name)  
             else: 
                 print("Meal not found. Please try again.")
 
