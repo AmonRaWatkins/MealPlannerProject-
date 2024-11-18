@@ -39,8 +39,8 @@ class MealPlanner:
     def __init__(self):
         self.user = None
         self.meals = self.load_meals_from_json([  # Two paths for json files
-            "C:/Users/johnw/OneDrive/Meal Planner Project/meal_planner_recipes.json",
-            "C:/Users/johnw/OneDrive/Meal Planner Project/meal_planner_50_meals.json"
+            "meal_planner_recipes.json",
+            "meal_planner_50_meals.json"
         ])
 
     def load_meals_from_json(self, file_paths):
