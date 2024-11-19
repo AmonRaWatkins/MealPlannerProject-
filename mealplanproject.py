@@ -1,4 +1,5 @@
-###make sure to install pip install fpdf into python
+###make sure to install pip install fpdf into python or python3 -m pip install fpdf
+
 
 import random
 import json
