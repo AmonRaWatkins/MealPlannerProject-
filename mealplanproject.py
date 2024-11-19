@@ -157,6 +157,8 @@ class MealPlanner:
                     meal.name not in used_meals and
                     meal.name not in self.user.excluded_meals
                 ]
+                print(f"Checking meals for {meal_type} on day {day + 1}...")
+                print(f"Total meals: {len(all_meals)}, Suitable meals: {len(suitable_meals)}")
 
                 if suitable_meals:
                     selected_meal = random.choice(suitable_meals)
